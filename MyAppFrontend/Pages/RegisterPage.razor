@@ -1,0 +1,53 @@
+﻿﻿@using Microsoft.AspNetCore.Components.Forms
+@inject IUserInterface _userInterface
+@page "/register"
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        <div class="text-center mb-4">
+            <img src="your-logo.png" alt="Logo" class="w-16 h-16 mx-auto mb-2 rounded-full">
+            <h1 class="text-2xl font-semibold">Create an Account</h1>
+        </div>
+
+        <EditForm Model="registrationModel" OnValidSubmit="HandleRegistration">
+            <div class="mb-4">
+                <label for="username" class="block text-gray-600">Username</label>
+                <InputText type="text" id="username" class="form-input mt-1 block w-full" @bind-Value="registrationModel.UserName" required />
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-gray-600">Email</label>
+                <InputText type="email" id="email" class="form-input mt-1 block w-full" @bind-Value="registrationModel.Email" required />
+            </div>
+            <div class="mb-4">
+                <label for="PhoneNumber" class="block text-gray-600">PhoneNumber</label>
+                <InputText type="text" id="PhoneNumber" class="form-input mt-1 block w-full" @bind-Value="registrationModel.PhoneNumber" required />
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-600">Password</label>
+                <InputText type="password" id="password" class="form-input mt-1 block w-full" @bind-Value="registrationModel.Password" required />
+            </div>
+
+            <div class="mb-6">
+                <button @onclick="HandleRegistration" type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">Register</button>
+            </div>
+        </EditForm>
+
+        <p class="text-center text-gray-600 text-sm">Already have an account? <a href="/login" class="text-blue-500 hover:underline">Log in</a></p>
+    </div>
+</div>
+
+@code {
+    private RegisterDto registrationModel = new RegisterDto();
+
+
+
+    public async Task HandleRegistration()
+    {
+        
+        var res = await _userInterface.register(registrationModel);
+        Console.WriteLine(res);
+    }
+}
+

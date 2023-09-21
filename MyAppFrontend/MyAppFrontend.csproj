@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,17 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.9" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\Comments\" />
+    <Folder Include="Model\Posts\" />
   </ItemGroup>
 
 	<Target Name="BuildTailwindCSS" BeforeTargets="Compile">
 		<Exec Command="npm run buildcss:debug" />
 	</Target>
-
-	<ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Shared\" />
-  </ItemGroup>
 
 </Project>

@@ -1,0 +1,62 @@
+﻿@inject NavigationManager navigationManager
+@inject ILocalStorageService localStorageService
+@inject AuthenticationStateProvider authenticationStateProvider
+
+
+<div class="bg-blue-500">
+    <div class="container mx-auto px-4">
+        <nav class="flex items-center justify-between py-4">
+            <div class="flex items-center">
+                <img src="https://cdn.pixabay.com/photo/2016/11/22/06/47/twitter-1848505_640.png" alt="Logo" class="w-10 h-10 mr-2">
+                <h1 class="text-2xl font-semibold text-white">Your Social Media App</h1>
+            </div>
+            <ul class="flex space-x-6">
+                <li>
+                    <a href="#" class="text-white hover:underline">Home</a>
+                </li>
+                <li>
+                    <a href="#" class="text-white hover:underline">Profile</a>
+                </li>
+                <li>
+                    <a href="#" class="text-white hover:underline">Friends</a>
+                </li>
+                <li>
+                    <a href="#" class="text-white hover:underline">Messages</a>
+                </li>
+            </ul>
+            <div class="flex space-x-6">
+                <AuthorizeView>
+                    <Authorized>
+                        <button @onclick="logout" class="bg-white text-blue-500 hover:bg-blue-600 text-sm font-semibold py-2 px-4 rounded-full">Logout</button>
+                    </Authorized>
+                    <NotAuthorized>
+                        <button @onclick="NavigateToLogin" class="bg-white text-blue-500 hover:bg-blue-600 text-sm font-semibold py-2 px-4 rounded-full">Login</button>
+                        <button @onclick="NavigateToRegister" class="bg-white text-blue-500 hover:bg-blue-600 text-sm font-semibold py-2 px-4 rounded-full">Register</button>
+
+                    </NotAuthorized>
+                </AuthorizeView>
+                
+               
+
+            </div>
+        </nav>
+    </div>
+</div>
+
+@code {
+    private void NavigateToRegister()
+    {
+        navigationManager.NavigateTo("/register");
+    }
+
+    private void NavigateToLogin()
+    {
+        navigationManager.NavigateTo("/login");
+    }
+    private async Task logout()
+    {
+        await localStorageService.RemoveItemAsync("authToken");
+        await authenticationStateProvider.GetAuthenticationStateAsync();
+        navigationManager.NavigateTo("/login");
+    }
+}
