@@ -32,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMigration();
+
 
 app.useAzure();
 app.UseHttpsRedirection();
