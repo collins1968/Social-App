@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MyAppFrontend;
 using MyAppFrontend.Services.Authentication;
 using MyAppFrontend.Services.AuthProvider;
+using MyAppFrontend.Services.Posts;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,6 +17,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddScoped<IUserInterface, UserService>();
+builder.Services.AddScoped<IPostInterface, PostService>();
 
 //Configuration for AuthProvider
 builder.Services.AddOptions();

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Post Service", "Post Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{02E27EBD-2F61-4481-B23B-F8860E54E61B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAppFrontend", "MyAppFrontend\MyAppFrontend.csproj", "{FD9B109A-7185-45FA-8DE8-65674CF79405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyAppFrontend", "MyAppFrontend\MyAppFrontend.csproj", "{FD9B109A-7185-45FA-8DE8-65674CF79405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

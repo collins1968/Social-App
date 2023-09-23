@@ -1,0 +1,89 @@
+﻿@page "/NewPost"
+@page "/EditPost/{postId}"
+@attribute [Authorize]
+@inject IPostInterface _postInterface
+@inject NavigationManager NavigationManager
+
+<div class="container mx-auto py-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg">
+        <div class="p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Create a Post</h2>
+            <EditForm Model="postModel" OnValidSubmit="addUpdatePost">
+                <DataAnnotationsValidator />
+                <div class="mb-4">
+                    <label for="title" class="text-gray-600">Title</label>
+                    <InputText type="text" id="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" @bind-Value="postModel.Title" required />
+                    <ValidationMessage For="@(() => postModel.Title)" />
+                </div>
+
+                <div class="mb-4">
+                    <label for="description" class="text-gray-600">Description</label>
+                    <InputText id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" @bind-Value="postModel.Description" />
+                    <ValidationMessage For="@(() => postModel.Description)" />
+                </div>
+
+                <div class="mb-6">
+                    <label for="image" class="text-gray-600">Image URL</label>
+                    <InputText type="url" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" @bind-Value="postModel.ImageUrl" required />
+                    <ValidationMessage For="@(() => postModel.ImageUrl)" />
+                </div>
+
+                <div class="flex justify-end">
+                   @if(postModel.Id == Guid.Empty)
+{
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Create Post</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Update Post</button>
+                    }
+                   
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@code {
+
+    [Parameter]
+    public string postId { get; set; }
+    PostDto postModel = new PostDto();
+
+    private async Task addUpdatePost()
+    {
+        PostUpdateDto postAdd = new PostUpdateDto
+        {
+            Title = postModel.Title,
+            Description = postModel.Description,
+            ImageUrl = postModel.ImageUrl
+        };
+        if(postModel.Id == Guid.Empty || postModel.Id == null)
+        {
+            var res = await _postInterface.AddPostAsync(postAdd);
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            await _postInterface.UpdatePostAsync(postModel.Id, postAdd);
+            NavigationManager.NavigateTo("/");
+        }
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(postId))
+        {
+            postModel = await _postInterface.GetPostByIdAsync(Guid.Parse(postId));
+        }
+
+    }
+
+}
+
+

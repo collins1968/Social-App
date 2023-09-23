@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\AddPost.razor" />
+    <Content Remove="Pages\CreatePost.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
@@ -16,11 +21,11 @@
 
   <ItemGroup>
     <Folder Include="Model\Comments\" />
-    <Folder Include="Model\Posts\" />
   </ItemGroup>
 
 	<Target Name="BuildTailwindCSS" BeforeTargets="Compile">
 		<Exec Command="npm run buildcss:debug" />
 	</Target>
+
 
 </Project>

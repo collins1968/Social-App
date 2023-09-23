@@ -134,6 +134,7 @@ namespace Post_Service.Controllers
                 {
                     Title = updatePost.Title,
                     Description = updatePost.Description,
+                    ImageUrl = updatePost.ImageUrl,
                     UserId = userId
                 };
                 _response.Result = await _postInterface.UpdatePost(post);

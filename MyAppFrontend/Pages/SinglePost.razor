@@ -1,0 +1,95 @@
+﻿@page "/post/{postId}"
+@using MyAppFrontend.Model.Posts;
+@using MyAppFrontend.Services.Posts;
+@inject IPostInterface _postInterface
+@inject NavigationManager NavigationManager
+
+<div class="container mx-auto py-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
+        <!-- Post Content -->
+        <div class="p-6">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">@post.Title</h2>
+            <img src="@post.ImageUrl" alt="Post Image" class="w-full h-64 object-cover rounded-lg mb-4">
+            <p class="text-gray-600 leading-relaxed mb-4">@post.Description</p>
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_640.png" alt="User Avatar" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <p class="text-gray-700 font-semibold">@post.UserId</p>
+                        <p class="text-gray-500 text-sm">@post.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button @onclick="(()=>EditPost(post.Id))" class="text-blue-500 hover:text-blue-700">
+                        Edit
+                    </button>
+                    <button @onclick="(()=>deletePost(post.Id))"  class="text-red-500 hover:text-red-700">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comment Section -->
+        <div class="p-6 border-t border-gray-300">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Comments</h3>
+
+            @foreach (var comment in post.Comments)
+            {
+                <div class="mb-4">
+                    <div class="flex items-center">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_640.png" alt="User Avatar" class="w-10 h-10 rounded-full mr-4">
+                        <div>
+                            <p class="text-gray-700 font-semibold">@comment.UserId</p>
+                            <p class="text-gray-600 leading-relaxed">@comment.CommentText</p>
+                            <div class="flex items-center mt-2">
+                                @*<button class="text-blue-500 hover:text-blue-700 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>*@
+                                <button class="text-red-500 hover:text-red-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Add Comment Input -->
+            <div class="mt-4 flex items-center">
+                <input type="text" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Add a comment..." />
+                <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+private PostDto post = new PostDto();
+
+    [Parameter]
+    public string? postId { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await _postInterface.GetPostByIdAsync(Guid.Parse(postId));
+    }
+    public async Task deletePost(Guid postId)
+    {
+        await _postInterface.DeletePostAsync(postId);
+    }
+
+    public void EditPost(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/EditPost/{postId}");
+    }
+
+
+}

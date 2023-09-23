@@ -1,9 +1,8 @@
-﻿using Post_Service.Model.Dto;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Post_Service.Model
+namespace MyAppFrontend.Model.Posts
 {
-    public class Post
+    public class PostDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -12,12 +11,17 @@ namespace Post_Service.Model
 
         public string UserId { get; set; }
 
-        public DateTime CreatedAt { get; set; }= DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public string ImageUrl { get; set; }
         [NotMapped]
         public List<CommentResponse> Comments { get; set; } = new List<CommentResponse>();
+    }
 
+    public class CommentResponse
+    {
+        public string CommentText { get; set; }
 
+        public string UserId { get; set; }
     }
 }
