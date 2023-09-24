@@ -95,5 +95,15 @@ namespace AuthService.Services
                 throw e;
             }
         }
+
+        public async Task<List<IdentityUser>> getAllUsers()
+        {
+            return await _appDbContext.Users.ToListAsync();
+        }
+
+        public async Task<IdentityUser> GetUserById(string id)
+        {
+            return await _appDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

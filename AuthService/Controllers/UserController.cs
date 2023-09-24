@@ -1,6 +1,7 @@
 ﻿using AuthService.Models.RequestsDto;
 using AuthService.Models.ResponseDto;
 using AuthService.Services.IServices;
+using AutoMapper;
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,13 +20,15 @@ namespace AuthService.Controllers
        private readonly IConfiguration _configuration;
        private readonly responsedto _response;
        private readonly IMessageBus _messageBus;
+        private readonly IMapper _mapper;
 
 
-    public UserController(IUserInterface userInterface, IConfiguration configuration, IMessageBus messageBus)
+    public UserController(IUserInterface userInterface, IConfiguration configuration, IMessageBus messageBus, IMapper mapper)
         {
               _userInterface = userInterface;
             _configuration = configuration;
             _messageBus = messageBus;
+            _mapper = mapper;
             _response = new responsedto();
         }
 
@@ -75,6 +78,47 @@ namespace AuthService.Controllers
                 return BadRequest(_response);
             }
         }
+        //get all user 
+        [HttpGet("getAllUsers")]
+        public async Task<ActionResult<UserDto>> getAllUsers()
+        {
+            var response = await _userInterface.getAllUsers();
+            var users = _mapper.Map<List<UserDto>>(response);
+            if(users != null)
+            {
+                _response.IsSuccess = true;
+                _response.Message = "Users fetched successfully!";
+                _response.Result = users;
+                return Ok(_response);
+            }
+            else
+            {
+                _response.IsSuccess = false;
+                _response.Message = "No users found!";
+                return NotFound(_response);
+            }
+        }
+        //get user by id
+        [HttpGet("getUserById")]
+        public async Task<ActionResult<UserDto>> GetUserById(string id)
+        {
+            var response = await _userInterface.GetUserById(id);
+            var user = _mapper.Map<UserDto>(response);
+            if (user != null)
+            {
+                _response.IsSuccess = true;
+                _response.Message = "User fetched successfully!";
+                _response.Result = user;
+                return Ok(_response);
+            }
+            else
+            {
+                _response.IsSuccess = false;
+                _response.Message = "No user found!";
+                return NotFound(_response);
+            }
+        }
+
         //get all post of this user
         [HttpGet("getPostsOfThisUser")]
         [Authorize]

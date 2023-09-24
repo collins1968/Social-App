@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MyAppFrontend;
 using MyAppFrontend.Services.Authentication;
 using MyAppFrontend.Services.AuthProvider;
+using MyAppFrontend.Services.comment;
 using MyAppFrontend.Services.Posts;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -18,6 +19,7 @@ builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddScoped<IUserInterface, UserService>();
 builder.Services.AddScoped<IPostInterface, PostService>();
+builder.Services.AddScoped<ICommentInterface, CommentService>();
 
 //Configuration for AuthProvider
 builder.Services.AddOptions();

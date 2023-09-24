@@ -1,7 +1,10 @@
 ﻿@page "/post/{postId}"
 @using MyAppFrontend.Model.Posts;
 @using MyAppFrontend.Services.Posts;
+@using MyAppFrontend.Services.comment;
 @inject IPostInterface _postInterface
+@inject ICommentInterface _commentInterface
+@inject IUserInterface _userInterface
 @inject NavigationManager NavigationManager
 
 <div class="container mx-auto py-8">
@@ -15,7 +18,13 @@
                 <div class="flex items-center">
                     <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_640.png" alt="User Avatar" class="w-12 h-12 rounded-full mr-4">
                     <div>
-                        <p class="text-gray-700 font-semibold">@post.UserId</p>
+                        @foreach(var user in user)
+                        {
+                            if (user.Id == post.UserId)
+                            {
+                                <p class="text-gray-700 font-semibold">@user.UserName</p>
+                            }
+                        }
                         <p class="text-gray-500 text-sm">@post.CreatedAt.ToString("MMMM dd, yyyy")</p>
                     </div>
                 </div>
@@ -33,14 +42,24 @@
         <!-- Comment Section -->
         <div class="p-6 border-t border-gray-300">
             <h3 class="text-2xl font-semibold text-gray-800 mb-4">Comments</h3>
-
+            @*@if(post.Comments.Count() == 0)
+            {
+                <p class="text-gray-600 leading-relaxed">no comments</p>
+                
+            }*@
             @foreach (var comment in post.Comments)
             {
                 <div class="mb-4">
                     <div class="flex items-center">
                         <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_640.png" alt="User Avatar" class="w-10 h-10 rounded-full mr-4">
                         <div>
-                            <p class="text-gray-700 font-semibold">@comment.UserId</p>
+                            @foreach (var user in user)
+                            {
+                                if (user.Id == comment.UserId)
+                                {
+                                    <p class="text-gray-700 font-semibold">@user.UserName</p>
+                                }
+                            }
                             <p class="text-gray-600 leading-relaxed">@comment.CommentText</p>
                             <div class="flex items-center mt-2">
                                 @*<button class="text-blue-500 hover:text-blue-700 mr-2">
@@ -61,8 +80,8 @@
 
             <!-- Add Comment Input -->
             <div class="mt-4 flex items-center">
-                <input type="text" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Add a comment..." />
-                <button class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Add</button>
+                <input type="text" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"  placeholder="Add a comment..." @bind="post.Comments.FirstOrDefault().CommentText" />
+                <button @onclick="(()=>addComment(post.Id))" class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full">Add</button>
             </div>
         </div>
     </div>
@@ -71,7 +90,10 @@
 
 
 @code {
-private PostDto post = new PostDto();
+    private PostDto post = new PostDto();
+
+    private List<UserDto> user = new List<UserDto>();
+
 
     [Parameter]
     public string? postId { get; set; }
@@ -80,6 +102,7 @@ private PostDto post = new PostDto();
     protected override async Task OnInitializedAsync()
     {
         post = await _postInterface.GetPostByIdAsync(Guid.Parse(postId));
+        user = await _userInterface.getAllUsers();
     }
     public async Task deletePost(Guid postId)
     {
@@ -91,5 +114,16 @@ private PostDto post = new PostDto();
         NavigationManager.NavigateTo($"/EditPost/{postId}");
     }
 
+    public async Task addComment(Guid id)
+    {
+        CommentRequestDto comment = new CommentRequestDto()
+            {
+                PostId = id,
+
+                CommentText= post.Comments.FirstOrDefault().CommentText
+           };
+       
+        var res = _commentInterface.AddCommentAsync(comment);
+    }
 
 }

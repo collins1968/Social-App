@@ -69,9 +69,11 @@ namespace Post_Service.Services
         {
             var post = await  _context.Posts.FirstOrDefaultAsync(x => x.Id == id);
             post.Comments = await getcommentsbypostId(id);
+            if (post == null)
+            {
+                throw new Exception("Post Not Found");
+            }
             return post;
-            
-            
         }
 
         public Task<List<CommentDto>> GetPostComments(Guid id)

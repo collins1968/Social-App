@@ -14,6 +14,40 @@ namespace MyAppFrontend.Services.Authentication
         {
             _httpClient = httpClient;
         }
+
+        public async Task<List<UserDto>> getAllUsers()
+        {
+            var response = await _httpClient.GetAsync($"{BaseUrl}/api/User/getAllUsers");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ResponseDto>(content);
+            if(result.IsSuccess)
+            {
+                var users = JsonConvert.DeserializeObject<List<UserDto>>(result.Result.ToString());
+                return users;
+            }
+            else
+            {
+                throw new Exception(result.Message);
+              }
+        }
+
+        public  async Task<UserDto> GetuserbyId(string id)
+        {
+            var response = await _httpClient.GetAsync($"{BaseUrl}/api/User/getuserbyId?id={id}");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ResponseDto>(content);
+            if(result.IsSuccess)
+            {
+                var user = JsonConvert.DeserializeObject<UserDto>(result.Result.ToString());
+                return user;
+            }
+            else
+            {                
+                throw new Exception(result.Message);
+              }
+
+        }
+
         public async Task<ResponseDto> login(LoginRequestDto loginRequestDto)
         {
             var request = JsonConvert.SerializeObject(loginRequestDto);
@@ -55,9 +89,8 @@ namespace MyAppFrontend.Services.Authentication
                 };
 
             }
-
-            
-
         }
+
+
     }
 }

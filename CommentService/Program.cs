@@ -19,6 +19,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
 });
 
+//set cors policy
+builder.Services.AddCors(options => options.AddPolicy("policy1", build =>
+{
+    build.AllowAnyOrigin();
+    build.AllowAnyHeader();
+    build.AllowAnyMethod();
+}));
+
 //register services
 builder.Services.AddScoped<ICommentInterface, CommentServices>();
 
@@ -49,5 +57,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors("policy1");
 
 app.Run();

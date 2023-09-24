@@ -8,5 +8,9 @@ namespace MyAppFrontend.Services.Authentication
         Task<ResponseDto> register(RegisterDto registerRequestDto);
 
         Task<ResponseDto> login(LoginRequestDto loginRequestDto);
+
+        Task<UserDto> GetuserbyId(string id);
+
+        Task<List<UserDto>> getAllUsers();
     }
 }
