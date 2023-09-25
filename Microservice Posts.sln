@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyAppFrontend", "MyAppFrontend\MyAppFrontend.csproj", "{FD9B109A-7185-45FA-8DE8-65674CF79405}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{97A3AAFC-6EE7-44FD-8253-6836850BF689}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{F4D20761-08C3-48E3-B315-B850B8A37B03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{FD9B109A-7185-45FA-8DE8-65674CF79405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9B109A-7185-45FA-8DE8-65674CF79405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9B109A-7185-45FA-8DE8-65674CF79405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D20761-08C3-48E3-B315-B850B8A37B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D20761-08C3-48E3-B315-B850B8A37B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D20761-08C3-48E3-B315-B850B8A37B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D20761-08C3-48E3-B315-B850B8A37B03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{0AA7705D-DBD0-46EE-BB4C-231674071BB3} = {56B2DE93-61E3-4B40-8EBA-04662987C9F2}
 		{02E27EBD-2F61-4481-B23B-F8860E54E61B} = {56B2DE93-61E3-4B40-8EBA-04662987C9F2}
 		{FD9B109A-7185-45FA-8DE8-65674CF79405} = {C5349246-25B9-4AD8-9B38-4D524B73E77D}
+		{F4D20761-08C3-48E3-B315-B850B8A37B03} = {97A3AAFC-6EE7-44FD-8253-6836850BF689}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5ADB1E45-9C0C-4F82-9544-18CB0DD71B25}

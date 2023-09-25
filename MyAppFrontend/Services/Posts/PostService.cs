@@ -9,7 +9,7 @@ namespace MyAppFrontend.Services.Posts
     {
 
         private readonly HttpClient _httpClient;
-        private readonly string baseUrl = "https://localhost:7133/api/Post";
+        private readonly string baseUrl = "https://localhost:7015/api/Post";
 
         public PostService(HttpClient httpClient)
         {
