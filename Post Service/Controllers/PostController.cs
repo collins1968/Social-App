@@ -129,14 +129,14 @@ namespace Post_Service.Controllers
 
                 //update the post
 
-                //var post = _mapper.Map<Post>(updatePost);
-                var post = new Post()
-                {
-                    Title = updatePost.Title,
-                    Description = updatePost.Description,
-                    ImageUrl = updatePost.ImageUrl,
-                    UserId = userId
-                };
+                var post = _mapper.Map(updatePost, postId);
+                //var post = new Post()
+                //{
+                //    Title = updatePost.Title,
+                //    Description = updatePost.Description,
+                //    ImageUrl = updatePost.ImageUrl,
+                //    UserId = userId
+                //};
                 _response.Result = await _postInterface.UpdatePost(post);
                 _response.IsSuccess = true;
                 _response.Message = "Post Updated Successfully";

@@ -1,4 +1,4 @@
-﻿{
+{
   "Routes": [
     //Authentication
     {
@@ -6,8 +6,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7036
+          "Host": "thesocialappauthapi.azurewebsites.net"
+
         }
       ],
       "UpstreamPathTemplate": "/api/User/getAllUsers",
@@ -18,8 +18,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7036
+          "Host": "thesocialappauthapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/User/getuserbyId?id={id}",
@@ -30,8 +29,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7036
+          "Host": "thesocialappauthapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/User/login",
@@ -42,8 +40,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7036
+          "Host": "thesocialappauthapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/User/register",
@@ -58,8 +55,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7133
+          "Host": "postserviceapi.azurewebsites.net"
+
         }
       ],
       "UpstreamPathTemplate": "/api/Post",
@@ -74,8 +71,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7133
+          "Host": "postserviceapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/Post/{id}",
@@ -89,8 +85,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7133
+          "Host": "postserviceapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/Post?id={id}",
@@ -105,8 +100,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7116
+          "Host": "commentserviceapi.azurewebsites.net"
+
         }
       ],
       "UpstreamPathTemplate": "/api/Comment",
@@ -120,8 +115,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7116
+          "Host": "commentserviceapi.azurewebsites.net"
         }
       ],
       "UpstreamPathTemplate": "/api/Comment/{id}",
@@ -133,6 +127,7 @@
 
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7015"
+    "BaseUrl": "https://apigatewayapi.azurewebsites.net"
   }
+
 }

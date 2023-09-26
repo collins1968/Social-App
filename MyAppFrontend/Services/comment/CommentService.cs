@@ -8,7 +8,7 @@ namespace MyAppFrontend.Services.comment
     public class CommentService : ICommentInterface
     {
         private readonly HttpClient _httpClient;
-        private readonly string baseUrl = "https://localhost:7116/api/Comment";
+        private readonly string baseUrl = "https://apigatewayapi.azurewebsites.net/api/Comment";
 
         public CommentService(HttpClient httpClient)
         {
@@ -31,6 +31,20 @@ namespace MyAppFrontend.Services.comment
             }
         }
 
-        
+        public async Task<ResponseDto> DeleteCommentAsync(Guid id)
+        {
+           var deleteComment = _httpClient.DeleteAsync($"{baseUrl}/{id}");
+           var content = await deleteComment.Result.Content.ReadAsStringAsync();
+            var commentResponse = JsonConvert.DeserializeObject<ResponseDto>(content);
+            if (commentResponse.IsSuccess)
+            {
+                return commentResponse;          
+            }
+            else
+            {
+                throw new Exception(commentResponse.Message);
+            }
+            
+        }
     }
 }

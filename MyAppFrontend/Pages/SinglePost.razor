@@ -73,9 +73,10 @@
                                         <p class="text-gray-700 font-semibold">@user.UserName</p>
                                     }
                                 }
+                                
                                 <p class="text-gray-600 leading-relaxed">@comment.CommentText</p>
                                 <div class="flex items-center mt-2">
-                                    <button class="text-red-500 hover:text-red-700">
+                                    <button @onclick="(()=>deleteComment(comment.Id))"  class="text-red-500 hover:text-red-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
@@ -117,6 +118,8 @@
     public async Task deletePost(Guid postId)
     {
         await _postInterface.DeletePostAsync(postId);
+        NavigationManager.NavigateTo("/");
+
     }
 
     public void EditPost(Guid postId)
@@ -128,7 +131,14 @@
     {
         comment.PostId = id;
         var res = _commentInterface.AddCommentAsync(comment);
-       post = await _postInterface.GetPostByIdAsync(id);
+        post = await _postInterface.GetPostByIdAsync(id);
+    }
+
+    public async Task deleteComment(Guid id)
+    {
+        await _commentInterface.DeleteCommentAsync(id);
+        post = await _postInterface.GetPostByIdAsync(id);
+
     }
 
 }

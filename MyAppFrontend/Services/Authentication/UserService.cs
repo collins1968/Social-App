@@ -8,7 +8,7 @@ namespace MyAppFrontend.Services.Authentication
     public class UserService : IUserInterface
     {
         private readonly HttpClient _httpClient;
-        private readonly string BaseUrl = "https://localhost:7015";
+        private readonly string BaseUrl = "https://apigatewayapi.azurewebsites.net";
 
         public UserService(HttpClient httpClient)
         {
