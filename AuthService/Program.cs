@@ -6,6 +6,7 @@ using AuthService.Utitlity;
 using MyMessageBus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AuthService.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddCors(options => options.AddPolicy("policy1", build =>
 builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();  
 builder.Services.AddScoped<IUserInterface, UserService>();
 builder.Services.AddScoped<IMessageBus, MessageBus>();
+builder.Services.AddScoped<IRabbitMQPublisher, RabbitMQPublisher>();
 //Register IdentityFramework
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 

@@ -1,5 +1,6 @@
 ﻿using AuthService.Models.RequestsDto;
 using AuthService.Models.ResponseDto;
+using AuthService.RabbitMQ;
 using AuthService.Services.IServices;
 using AutoMapper;
 using Azure;
@@ -21,15 +22,17 @@ namespace AuthService.Controllers
        private readonly responsedto _response;
        private readonly IMessageBus _messageBus;
         private readonly IMapper _mapper;
+        private readonly IRabbitMQPublisher _rabbitMQPublisher;
 
 
-    public UserController(IUserInterface userInterface, IConfiguration configuration, IMessageBus messageBus, IMapper mapper)
+    public UserController(IUserInterface userInterface, IConfiguration configuration, IMessageBus messageBus, IMapper mapper, IRabbitMQPublisher rabbitMQPublisher)
         {
               _userInterface = userInterface;
             _configuration = configuration;
             _messageBus = messageBus;
             _mapper = mapper;
             _response = new responsedto();
+            _rabbitMQPublisher = rabbitMQPublisher;
         }
 
         [HttpPost("register")]
@@ -45,6 +48,7 @@ namespace AuthService.Controllers
                     Name = Registration.UserName
                 };
                 await _messageBus.PublishMessage(messagequeue, queueName);
+                _rabbitMQPublisher.PublishMessage(messagequeue, queueName);
                 _response.IsSuccess = true;
                 _response.Message = message;
                 return Ok(_response);

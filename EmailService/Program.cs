@@ -21,6 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var dbContextBuilder = new DbContextOptionsBuilder<AppDbContext>();
 dbContextBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
 builder.Services.AddSingleton(new Emailservice(dbContextBuilder.Options));
+builder.Services.AddHostedService<RaabbitMqRegister>();
 
 //register email service
 builder.Services.AddSingleton<IAzureMessageBusConsumer, AzureMessageBusConsumer>();
